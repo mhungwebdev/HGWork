@@ -1,0 +1,5 @@
+2023-04-26T00:58:40.2302190+07:00  [INF] Now listening on: "https://localhost:7288" (d826f4b8)
+2023-04-26T00:58:40.2343363+07:00  [INF] Now listening on: "http://localhost:5288" (d826f4b8)
+2023-04-26T00:58:40.2396198+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-04-26T00:58:40.2397792+07:00  [INF] Hosting environment: "Development" (c3307c92)
+2023-04-26T00:58:40.2398009+07:00  [INF] Content root path: "C:\Users\Admin\OneDrive\Máy tính\HGWork\BE\HGWork\HGWork" (b5d60022)

@@ -12,14 +12,16 @@ namespace HGWork.Service
     public class TaskService : ITaskService
     {
         private readonly HGWorkDbContext _context;
+        private readonly IEmailService _emailService;
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
 
-        public TaskService(HGWorkDbContext context, ILogger<UserService> logger, IMapper mapper)
+        public TaskService(HGWorkDbContext context, ILogger<UserService> logger, IMapper mapper, IEmailService emailService)
         {
             _context = context;
             _logger = logger;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<ResponseBase<int>> Create(Model.Task request)
@@ -242,7 +244,26 @@ namespace HGWork.Service
             <p>Cảm ơn bạn đã tin dùng hệ thống của chúng tôi!</p>
             <p><i>Trung thâm hỗ trợ 24/7 HGWork</i></p>
             ", name, link, startDate, endDate, status, DateTime.Now);
-            new System.Threading.Tasks.Task(() => { SMTPHelper.SendMail(mailTo, contentEmail, "Thông báo cập nhật công việc"); }).Start();
+
+            var email = new Email()
+            {
+                From = "",
+                EmailContent = contentEmail,
+                Subject = "Thông báo cập nhật công việc",
+                To = mailTo
+            };
+            
+            _ = _emailService.SendMail(email);
+        }
+
+        public async Task<List<Model.Task>> GetTaskEndDate()
+        {
+            var tasks = new List<Model.Task>();
+            var now = DateTime.Now.AddHours(-1);
+
+            tasks = tasks.Where(x => x.EndDate.ToString("MM/dd/yyyy").Equals(now.ToString("MM/dd/yyyy")) && x.EndDate.Hour == now.Hour - 1).ToList();
+
+            return tasks;
         }
     }
 }

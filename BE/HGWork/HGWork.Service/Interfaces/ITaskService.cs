@@ -14,5 +14,6 @@ namespace HGWork.Service.Interfaces
         Task<ResponseBase<Model.Task>> GetById(int id);
         Task<ResponseBase<List<TaskView>>> GetAll();
         Task<ResponseBase<List<TaskView>>> FilterTasks(FilterTaskDto filter);
+        Task<List<Model.Task>> GetTaskEndDate();
     }
 }
